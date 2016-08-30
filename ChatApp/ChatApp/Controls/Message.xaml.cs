@@ -17,9 +17,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ChatApp.Controls
 {
-    public sealed partial class RecentContactListItem : UserControl
+    public sealed partial class Message : UserControl
     {
-        public RecentContactListItem()
+        public Message()
         {
             this.InitializeComponent();
         }

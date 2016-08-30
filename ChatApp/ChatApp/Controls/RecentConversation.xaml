@@ -1,0 +1,46 @@
+﻿<UserControl
+    x:Class="ChatApp.Controls.RecentConversation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ChatApp.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:ChatApp.Controls"
+    xmlns:valueConverters="using:ChatApp.ValueConverters"
+    mc:Ignorable="d"
+    DataContext="{Binding}"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <valueConverters:MessageDateTimeToStringConverter x:Key="MessageDateTimeToStringConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <controls:ProfilePicture DataContext="{Binding User}"
+                                 Width="{StaticResource ProfilePictureEllipseDimensionLarge}"
+                                 Height="{StaticResource ProfilePictureEllipseDimensionLarge}"/>
+        <StackPanel VerticalAlignment="Center"
+                    Margin="10,0,0,0"
+                    Grid.Column="1">
+            <TextBlock Text="{Binding User.Username}"
+                       FontWeight="SemiBold"/>
+            <TextBlock Text="{Binding LastMessage.Content}"
+                       TextTrimming="CharacterEllipsis"
+                       Margin="0,3,0,0"
+                       FontWeight="Light"/>
+        </StackPanel>
+        <TextBlock Text="{Binding LastMessage.DateTime, Converter={StaticResource MessageDateTimeToStringConverter}}"
+                   Grid.Column="2"
+                   VerticalAlignment="Center"
+                   FontWeight="Light"
+                   FontSize="12"
+                   Margin="5,0,0,0"/>
+
+    </Grid>
+</UserControl>

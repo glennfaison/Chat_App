@@ -18,6 +18,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>ChatApp_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>ECF5D2F220C5466B85ED555BCDDFDD36EE94900A</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -90,6 +91,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="ChatApp_TemporaryKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -97,29 +99,60 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\SendMessageCommand.cs" />
+    <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\ErrorDialog.cs" />
-    <Compile Include="Controls\ContactListItem.xaml.cs" />
-    <Compile Include="Controls\CurrentCorrespondentButton.xaml.cs" />
-    <Compile Include="Controls\RecentContactListItem.xaml.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="Controls\ActiveFriend.xaml.cs">
+      <DependentUpon>ActiveFriend.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CurrentCorrespondantButton.xaml.cs">
+      <DependentUpon>CurrentCorrespondantButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Friend.xaml.cs">
+      <DependentUpon>Friend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message.xaml.cs">
+      <DependentUpon>Message.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Profile.xaml.cs">
+      <DependentUpon>Profile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProfilePicture.xaml.cs">
+      <DependentUpon>ProfilePicture.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RecentConversation.xaml.cs">
+      <DependentUpon>RecentConversation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Facades\AppShellNavigation.cs" />
+    <Compile Include="Facades\ContactFacade.cs" />
+    <Compile Include="Facades\MessageFacade.cs" />
     <Compile Include="Models\Csharp\Message.cs" />
+    <Compile Include="Models\Csharp\Profile.cs" />
+    <Compile Include="Models\Csharp\RecentConversation.cs" />
     <Compile Include="Models\Csharp\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Storage\ChatAppDataModel.cs" />
-    <Compile Include="ViewModels\ContactViewModel.cs" />
-    <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\RecentlyContactedViewModel.cs" />
-    <Compile Include="Views\HomePage.xaml.cs" />
+    <Compile Include="ValueConverters\LastActiveDateTimeToStringConverter.cs" />
+    <Compile Include="ValueConverters\MessageDateTimeToStringConverter.cs" />
+    <Compile Include="ValueConverters\MesssageToVisibilityConverter.cs" />
+    <Compile Include="ViewModels\ChatPageViewModel.cs" />
+    <Compile Include="ViewModels\ContactsPageViewModel.cs" />
+    <Compile Include="Views\AppShell.xaml.cs">
+      <DependentUpon>AppShell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChatPage.xaml.cs">
+      <DependentUpon>ChatPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ContactsPage.xaml.cs">
+      <DependentUpon>ContactsPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="ChatApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\test.png" />
+    <Content Include="Assets\Images\test1.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -134,34 +167,57 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\ContactListItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\ActiveFriend.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CurrentCorrespondentButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\CurrentCorrespondantButton.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\RecentContactListItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\Friend.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\Message.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HomePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\Profile.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProfilePicture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RecentConversation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\AppShell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ContactsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Facades\" />
     <Folder Include="LifeCycle\" />
     <Folder Include="Models\Json\" />
     <Folder Include="StateTriggers\" />
-    <Folder Include="Styles\" />
-    <Folder Include="ValueConverters\" />
+    <Folder Include="Storage\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

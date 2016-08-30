@@ -1,4 +1,5 @@
 ﻿using ChatApp.Models;
+using ChatApp.Models.Csharp;
 using ChatApp.Views;
 using System;
 using Windows.ApplicationModel;
@@ -17,7 +18,19 @@ namespace ChatApp
         /// <summary>
         /// The current user of this application instance
         /// </summary>
-        public static User ThisUser { get; set; }
+        public static User ThisUser { get; set; } = new User
+        {
+            Username = "Glenn Faision",
+            ImagePath = "/Assets/Images/test.png",
+            Id = 1,
+        };
+        public static User AnotherUser { get; set; } = new User
+        {
+            Username = "Acha Bill",
+            ImagePath = "/Assets/Images/test1.jpg",
+            Id = 2,
+        };
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -68,7 +81,7 @@ namespace ChatApp
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(HomePage), e.Arguments);
+                rootFrame.Navigate(typeof(Views.AppShell), e.Arguments);
             }
             // Ensure the current window is active
             Window.Current.Activate();

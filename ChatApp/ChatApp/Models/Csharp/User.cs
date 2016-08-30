@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatApp.Models
+namespace ChatApp.Models.Csharp
 {
     public class User
     {
@@ -14,9 +14,9 @@ namespace ChatApp.Models
         public string Email { get; set; }
         public string ImagePath { get; set; }
 
-        public bool Is(User user)
-        {
-            return Id == user.Id;
-        }
+        //Comparism and mapping.
+        public override bool Equals(object obj) => (obj as User).Id == Id;
+        public override int GetHashCode() => Id;
+
     }
 }

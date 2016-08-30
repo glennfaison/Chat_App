@@ -1,15 +1,29 @@
-﻿using ChatApp.Models;
-using ChatApp.ViewModels;
+﻿using ChatApp.Models.Csharp;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ChatApp.Storage
+/// <summary>
+/// The Facade design pattern simplifies the interface to a complex system; 
+/// because it is usually composed of all the classes which make up the subsystems of the complex system. 
+/// A Facade shields the user from the complex details of the system and provides them with a simplified view of it which is easy to use.
+/// It also decouples the code that uses the system from the details of the subsystems, making it easier to modify the system later.
+/// </summary>
+namespace ChatApp.Facades
 {
-    public class ChatAppDataModel
+    public static class ContactFacade
     {
+       
+        /// <summary>
+        /// Returns all friends of the current user.
+        /// </summary>
+        /// <returns></returns>
         public static ObservableCollection<User> GetAllContacts(out string error)
         {
-            error = string.Empty;
+            error = null;
             ObservableCollection<User> ret = new ObservableCollection<User>();
             // Query the database for all Contacts
             #region dummyRegion
@@ -27,23 +41,26 @@ namespace ChatApp.Storage
             #endregion
             return ret;
         }
-        public static ObservableCollection<RecentlyContactedViewModel> GetAllRecentlyContacted(out string error)
+        public static ObservableCollection<RecentConversation> GetRecentConversations(out string error)
         {
             error = string.Empty;
-            ObservableCollection<RecentlyContactedViewModel> ret = new ObservableCollection<RecentlyContactedViewModel>();
+            ObservableCollection<RecentConversation> ret = new ObservableCollection<RecentConversation>();
             // Query the database for all Contacts
             #region dummyRegion
-            var AllContacts = GetAllContacts(out error);
             for (int i = 0; i < 10; i++)
             {
-                ret.Add(new RecentlyContactedViewModel(new Message
+                ret.Add(new RecentConversation
                 {
-                    Content = "Lorem Ipsum rectifius dolor. Esta la primera dos rios dos Camerones!",
-                    DateTime = DateTime.Now,
-                    Id = i,
-                    Receiver = AllContacts[i],
-                    Sender = App.ThisUser
-                }));
+                    LastMessage = new Message
+                    {
+                        Content = "Lorem Ipsum rectifius dolor. Esta la primera dos rios dos Camerones!",
+                        DateTime = DateTime.Now,
+                        Id = i,
+                        Receiver = App.AnotherUser,
+                        Sender = App.ThisUser
+                    },
+                    User = App.AnotherUser,
+                });
             }
             #endregion
             return ret;
@@ -55,7 +72,7 @@ namespace ChatApp.Storage
         }
         public static bool MessageWasExchangedWith(Message message, User user)
         {
-            return message.Sender.Is(user) || message.Receiver.Is(user);
+            return message.Sender.Equals(user) || message.Receiver.Equals(user);
         }
         public static void RemoveFromRecentlyContacted(User user, out string error)
         {
@@ -70,7 +87,7 @@ namespace ChatApp.Storage
                 error = "Message incorrectly accessed!";
                 return null;
             }
-            else if (!message.Receiver.Is(App.ThisUser))
+            else if (!message.Receiver.Equals(App.ThisUser))
             {
                 return message.Receiver;
             }

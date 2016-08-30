@@ -5,4 +5,12 @@
     xmlns:local="using:ChatApp"
     RequestedTheme="Light">
 
+    <!-- makes the styles globally accessible -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

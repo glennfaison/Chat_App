@@ -17,9 +17,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ChatApp.Controls
 {
-    public sealed partial class CurrentCorrespondentButton : UserControl
+    public sealed partial class ProfilePicture : UserControl
     {
-        public CurrentCorrespondentButton()
+        public ProfilePicture()
         {
             this.InitializeComponent();
         }
