@@ -31,7 +31,7 @@ namespace ChatApp.ViewModels
             _friends = GetFriendProfiles();
         }
         /// <summary>
-        /// Get Friends' Profiles, depending on the selection parameters
+        /// Get Friends' Profiles, depending on their online status
         /// </summary>
         /// <returns></returns>
         private ObservableCollection<Profile> GetFriendProfiles(bool onlineOnly = false)
