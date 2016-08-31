@@ -17,9 +17,10 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel HorizontalAlignment="Stretch">
-            <controls:Profile DataContext="{Binding}"/>
+            <controls:Profile DataContext="{Binding}" Margin="2.5,2.5"/>
             <Rectangle Height="1"
-                       Margin="2,0,2,0"/>
+                       Margin="80,0,2,0"
+                       Fill="Gray"/>
         </StackPanel>
     </Grid>
 </UserControl>

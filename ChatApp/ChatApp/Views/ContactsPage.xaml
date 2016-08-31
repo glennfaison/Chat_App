@@ -65,12 +65,7 @@
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <Controls:RecentConversation Margin="5"/>
-                                    <Rectangle Height="1"
-                                               Fill="Gray"
-                                               Margin="2,0,2,0"/>
-                                </StackPanel>
+                                <Controls:RecentConversation/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

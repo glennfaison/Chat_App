@@ -21,10 +21,15 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
         <controls:ProfilePicture DataContext="{Binding User}"
                                  Width="{StaticResource ProfilePictureEllipseDimensionLarge}"
-                                 Height="{StaticResource ProfilePictureEllipseDimensionLarge}"/>
+                                 Height="{StaticResource ProfilePictureEllipseDimensionLarge}"
+                                 Margin="2.5, 2.5"/>
         <StackPanel VerticalAlignment="Center"
                     Margin="10,0,0,0"
                     Grid.Column="1">
@@ -41,6 +46,11 @@
                    FontWeight="Light"
                    FontSize="12"
                    Margin="5,0,0,0"/>
+        <Rectangle Grid.Row="1"
+                   Grid.ColumnSpan="3"
+                   Fill="Gray"
+                   Margin="80,0,2,0"
+                   Height="1"/>
 
     </Grid>
 </UserControl>
