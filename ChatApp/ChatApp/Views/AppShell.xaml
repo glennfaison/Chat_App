@@ -16,7 +16,6 @@
         <Frame x:Name="contactsFrame"
                BorderThickness="1"
                BorderBrush="Gray">
-
             <Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition>

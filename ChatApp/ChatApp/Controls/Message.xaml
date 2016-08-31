@@ -25,29 +25,29 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <controls:ProfilePicture DataContext="{Binding Sender}"
-                                 Width="{StaticResource ProfilePictureEllipseDimensionMedium}"
-                                 Height="{StaticResource ProfilePictureEllipseDimensionMedium}"
-                                 Margin="5,0,0,0"
-                                 Grid.Column="0"/>
+                                     Width="{StaticResource ProfilePictureEllipseDimensionMedium}"
+                                     Height="{StaticResource ProfilePictureEllipseDimensionMedium}"
+                                     Margin="5,0,0,0"
+                                     Grid.Column="0"/>
             <Border CornerRadius="20"
-                MaxWidth="300"
-                VerticalAlignment="Center"
+                    MaxWidth="300"
+                    VerticalAlignment="Center"
                     Margin="10,0,0,0"
-                Grid.Column="1"
-                Background="{StaticResource MessageBackgroundColor}">
+                    Grid.Column="1"
+                    Background="{StaticResource MessageBackgroundColor}">
                 <TextBlock Text="{Binding Content}"
                            Margin="10"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       TextWrapping="Wrap"
-                       Foreground="White"/>
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Foreground="White"/>
             </Border>
             <TextBlock Text="{Binding DateTime, Converter={StaticResource MessageDateTimeToStringConverter}}"
-                   FontWeight="Light"
+                       FontWeight="Light"
                        VerticalAlignment="Center"
                        Margin="10,0,0,0"
                        Grid.Column="2"
-                   FontSize="12"/>
+                       FontSize="12"/>
         </Grid>
         <Grid Visibility="{Binding Converter={StaticResource MesssageToVisibilityConverter}, ConverterParameter='right'}"
               HorizontalAlignment="Right">
@@ -57,28 +57,26 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="{Binding DateTime, Converter={StaticResource MessageDateTimeToStringConverter}}"
-                   FontWeight="Light"
+                       FontWeight="Light"
                        VerticalAlignment="Center"   
-                   FontSize="12"/>
+                       FontSize="12"/>
             <Border CornerRadius="20"
-                VerticalAlignment="Center"
+                    VerticalAlignment="Center"
                     Margin="10,0,0,0"
-                Grid.Column="1"
-                Background="{StaticResource MessageBackgroundColor}">
+                    Grid.Column="1"
+                    Background="{StaticResource MessageBackgroundColor}">
                 <TextBlock Text="{Binding Content}"
                            Margin="10"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       TextWrapping="Wrap"
-                       Foreground="White"/>
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Foreground="White"/>
             </Border>
             <controls:ProfilePicture DataContext="{Binding Sender}"
-                                 Width="{StaticResource ProfilePictureEllipseDimensionMedium}"
-                                 Height="{StaticResource ProfilePictureEllipseDimensionMedium}"
-                                 Margin="10,0,0,0"
-                                 Grid.Column="2"/>
-
-
+                                     Width="{StaticResource ProfilePictureEllipseDimensionMedium}"
+                                     Height="{StaticResource ProfilePictureEllipseDimensionMedium}"
+                                     Margin="10,0,0,0"
+                                     Grid.Column="2"/>
         </Grid>
     </Grid>
 </UserControl>

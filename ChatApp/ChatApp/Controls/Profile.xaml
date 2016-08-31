@@ -17,20 +17,29 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
         <controls:ProfilePicture DataContext="{Binding User}"
-                                 HorizontalAlignment="Center"/>
+                                 Grid.Column="0"
+                                 Width="{StaticResource ProfilePictureEllipseDimensionLarge}"
+                                 Height="{StaticResource ProfilePictureEllipseDimensionLarge}"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Center"/>
         <TextBlock Text="{Binding User.Username}"
+                   Grid.Column="1"
                    FontWeight="SemiBold"
                    FontSize="16"
-                   HorizontalAlignment="Center"/>
-        <TextBlock Text="{Binding User.LastActive, Converter={StaticResource LastActiveDateTimeToStringConverter}}"
                    HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   TextAlignment="Center"/>
+        <TextBlock Text="{Binding LastActive, Converter={StaticResource LastActiveDateTimeToStringConverter}}"
+                   Grid.Column="2"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
                    FontWeight="Light"/>
     </Grid>
 </UserControl>

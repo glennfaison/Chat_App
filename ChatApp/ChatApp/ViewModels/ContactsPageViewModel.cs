@@ -18,18 +18,36 @@ namespace ChatApp.ViewModels
         private string error;
         private ObservableCollection<User> _allFriends;
         private ObservableCollection<RecentConversation> _recentConversations;
+        private ObservableCollection<Profile> _friends;
 
         public ObservableCollection<User> AllFriends { get { return _allFriends; } }
         public ObservableCollection<RecentConversation> RecentConversations { get { return _recentConversations; } }
-
-
+        public ObservableCollection<Profile> Friends { get { return _friends; } }
+        
         public ContactsPageViewModel()
         {
             _allFriends = Facades.ContactFacade.GetAllContacts(out error);
             _recentConversations = Facades.ContactFacade.GetRecentConversations(out error);
+            _friends = GetFriendProfiles();
         }
-
-
+        /// <summary>
+        /// Get Friends' Profiles, depending on the selection parameters
+        /// </summary>
+        /// <returns></returns>
+        private ObservableCollection<Profile> GetFriendProfiles(bool onlineOnly = false)
+        {
+            var ret = new ObservableCollection<Profile>();
+            foreach(var user in _allFriends)
+            {
+                ret.Add(new Profile
+                {
+                    LastActive = DateTime.Now,
+                    User = user
+                });
+            }
+            return ret;
+        }
+        
         /// <summary>
         /// Get profile of user from recent conversation.
         /// </summary>

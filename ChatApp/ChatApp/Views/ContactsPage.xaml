@@ -17,47 +17,47 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0"
-                  BorderBrush="Gray"
-                  BorderThickness="1">
+              BorderBrush="Gray"
+              BorderThickness="1">
             <TextBlock Text="{Binding ElementName=flipView, Path=SelectedItem.Tag}" 
-                           FontWeight="ExtraBold" 
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           TextAlignment="Center"/>
+                       FontWeight="ExtraBold" 
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"/>
             <AppBarButton Icon="Add" 
-                              HorizontalAlignment="Right"/>
+                          HorizontalAlignment="Right"/>
         </Grid>
         <Grid Grid.Row="1"
-                  BorderBrush="Black"
-                  BorderThickness=".25">
+              BorderBrush="Black"
+              BorderThickness=".25">
             <StackPanel HorizontalAlignment="Stretch">
                 <TextBlock Text="Connection Status"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            TextAlignment="Center"/>
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top"
+                           TextAlignment="Center"/>
                 <AutoSuggestBox PlaceholderText="Search for people and groups"
-                                    VerticalAlignment="Top"
-                                    HorizontalAlignment="Stretch"
-                                    Margin="5"/>
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Stretch"
+                                Margin="5"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2"
-                  BorderBrush="Black"
-                  BorderThickness=".25">
+              BorderBrush="Black"
+              BorderThickness=".25">
             <FlipView x:Name="flipView" 
-                          TabNavigation="Once"
-                          RequestedTheme="Default">
+                      TabNavigation="Once"
+                      RequestedTheme="Default">
                 <FlipViewItem Tag="Recently Contacted"
-                                  Background="White"
-                                  x:Name="recentConversationsTab">
+                              Background="White"
+                              x:Name="recentConversationsTab">
                     <ListView ItemsSource="{Binding RecentConversations, Mode=TwoWay}"
-                                    x:Name="recentConversationsListView"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    IncrementalLoadingTrigger="Edge"
-                                    IncrementalLoadingThreshold="30"
-                                    SelectionMode="Single"
-                                    SelectionChanged="recentConversationsListView_SelectionChanged">
+                              x:Name="recentConversationsListView"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              IncrementalLoadingTrigger="Edge"
+                              IncrementalLoadingThreshold="30"
+                              SelectionMode="Single"
+                              SelectionChanged="recentConversationsListView_SelectionChanged">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -76,15 +76,20 @@
                     </ListView>
                 </FlipViewItem>
                 <FlipViewItem Tag="Contacts"
-                                  x:Name="friendsTab">
-                    <ListView ItemsSource="{Binding AllFriends, Mode=TwoWay}"
-                                  x:Name="friendsListView"
-                                  HorizontalAlignment="Stretch"
-                                  VerticalAlignment="Stretch"
-                                  IncrementalLoadingTrigger="Edge"
-                                  IncrementalLoadingThreshold="30"
-                                  SelectionMode="Single"
-                                  SelectionChanged="friendsListView_SelectionChanged">
+                              x:Name="friendsTab">
+                    <ListView ItemsSource="{Binding Friends, Mode=TwoWay}"
+                              x:Name="friendsListView"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              IncrementalLoadingTrigger="Edge"
+                              IncrementalLoadingThreshold="30"
+                              SelectionMode="Single"
+                              SelectionChanged="friendsListView_SelectionChanged">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/> 
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Controls:Friend/>
@@ -93,29 +98,29 @@
                     </ListView>
                 </FlipViewItem>
                 <FlipViewItem Tag="Settings"
-                                  x:Name="settingsTab">
+                              x:Name="settingsTab">
 
                 </FlipViewItem>
             </FlipView>
         </Grid>
         <Grid Grid.Row="4"
-                  BorderBrush="Black"
-                  BorderThickness=".25">
+              BorderBrush="Black"
+              BorderThickness=".25">
             <AppBarButton Icon="Clock"
-                              x:Name="recentConversationButton"
-                              Tag="Recently Contacted"
-                              HorizontalAlignment="Left"
-                              Click="recentConversationButton_Click"/>
+                          x:Name="recentConversationButton"
+                          Tag="Recently Contacted"
+                          HorizontalAlignment="Left"
+                          Click="recentConversationButton_Click"/>
             <AppBarButton Icon="People"
-                              x:Name="friendsButton"
-                              Tag="Online Contacts"
-                              HorizontalAlignment="Center"
-                              Click="friendsButton_Click"/>
+                          x:Name="friendsButton"
+                          Tag="Online Contacts"
+                          HorizontalAlignment="Center"
+                          Click="friendsButton_Click"/>
             <AppBarButton Icon="Setting"
-                              x:Name="settingsButton"
-                              Tag="Settings"
-                              HorizontalAlignment="Right"
-                              Click="settingsButton_Click"/>
+                          x:Name="settingsButton"
+                          Tag="Settings"
+                          HorizontalAlignment="Right"
+                          Click="settingsButton_Click"/>
         </Grid>
     </Grid>
 </Page>

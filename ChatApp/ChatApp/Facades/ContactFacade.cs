@@ -33,7 +33,7 @@ namespace ChatApp.Facades
                 {
                     Email = "email@example.com",
                     Id = 2 * i,
-                    ImagePath = string.Empty,
+                    ImagePath = App.AnotherUser.ImagePath,
                     Password = "password",
                     Username = "User Name" + i
                 });
@@ -47,6 +47,7 @@ namespace ChatApp.Facades
             ObservableCollection<RecentConversation> ret = new ObservableCollection<RecentConversation>();
             // Query the database for all Contacts
             #region dummyRegion
+            var allContacts = GetAllContacts(out error);
             for (int i = 0; i < 10; i++)
             {
                 ret.Add(new RecentConversation
@@ -59,7 +60,7 @@ namespace ChatApp.Facades
                         Receiver = App.AnotherUser,
                         Sender = App.ThisUser
                     },
-                    User = App.AnotherUser,
+                    User = allContacts.ElementAt(i),
                 });
             }
             #endregion

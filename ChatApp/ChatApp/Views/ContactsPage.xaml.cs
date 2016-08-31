@@ -46,14 +46,14 @@ namespace ChatApp.Views
         }
 
         /// <summary>
-        /// Invokedwhen the selection on the friendsListView is changed.
+        /// Invoked when the selection on the friendsListView is changed.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void friendsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //profile to use for 'currentCorrespondentButton' in chatpage.
-            Profile _profile = _vm.GetProfile(friendsListView.SelectedItem as RecentConversation);
+            Profile _profile = friendsListView.SelectedItem as Profile;
             Facades.AppShellNavigation.ChatFrame.Navigate(typeof(ChatPage), _profile);
         }
 
