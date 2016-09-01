@@ -35,7 +35,6 @@ namespace ChatApp.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
             _vm.ChatCorrespondent = e.Parameter as Profile;
         }
 

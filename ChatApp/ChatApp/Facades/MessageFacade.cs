@@ -10,6 +10,8 @@ namespace ChatApp.Facades
 {
     public static class MessageFacade
     {
+        public static Profile Correspondent { get; set; }
+        static int i = 500;
         /// <summary>
         /// Returns the messages between the 2 users
         /// </summary>
@@ -18,9 +20,9 @@ namespace ChatApp.Facades
         /// <returns></returns>
         public static ObservableCollection<Message> GetMessages(User u1, User u2)
         {
-            //dummy.
             var messages = new ObservableCollection<Message>();
-
+            //dummy.
+            #region dummyRegion
             messages.Add(new Message
             {
                 Sender = App.ThisUser,
@@ -105,7 +107,22 @@ namespace ChatApp.Facades
                 Content = "I dey bitch...",
                 DateTime = DateTime.Now,
             });
+            #endregion
             return messages;
+        }
+        public static void SendMessage(string text, Profile chatCorrespondent, out string error)
+        {
+            error = string.Empty;
+            var message = new Message
+            {
+                Content = text,
+                DateTime = DateTime.Now,
+                Id = i++,
+                Receiver = chatCorrespondent.User,
+                Sender = App.ThisUser
+            };
+            var conversations = ContactFacade.RecentConversations;
+            ContactFacade.InsertRecentConversation(message, ref conversations);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿
+using ChatApp.Commands;
 using ChatApp.Common;
+using ChatApp.Facades;
 using ChatApp.Models.Csharp;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ChatApp.ViewModels
 {
@@ -22,18 +25,27 @@ namespace ChatApp.ViewModels
         /// <summary>
         /// The message text.
         /// </summary>
-        public string Text { get { return _text; } set { SetProperty(ref _text, value); } }
-
+        public string Text
+        {
+            get { return _text; }
+            set { SetProperty(ref _text, value); }
+        }
         public ObservableCollection<Message> Messages { get { return _messages; } }
-
+        public ICommand SendMessage { get; set; }
         /// <summary>
-        /// The chatcorrespondent.
+        /// The chat correspondent.
         /// </summary>
-        public Profile ChatCorrespondent { get { return _chatCorrespondent; } set { SetProperty(ref _chatCorrespondent, value); } }
+        public Profile ChatCorrespondent
+        {
+            get { return _chatCorrespondent; }
+            set { SetProperty(ref _chatCorrespondent, value); }
+        }
 
         public ChatPageViewModel()
         {
-            _messages = Facades.MessageFacade.GetMessages(App.ThisUser, App.AnotherUser);
+            ChatCorrespondent = MessageFacade.Correspondent;
+            SendMessage = new SendMessageCommand(this);
+            _messages = MessageFacade.GetMessages(App.ThisUser, ChatCorrespondent.User);
         }
 
         /// <summary>

@@ -71,6 +71,7 @@
                     </ListView>
                 </FlipViewItem>
                 <FlipViewItem Tag="Contacts"
+                              Background="White"
                               x:Name="friendsTab">
                     <ListView ItemsSource="{Binding Friends, Mode=TwoWay}"
                               x:Name="friendsListView"

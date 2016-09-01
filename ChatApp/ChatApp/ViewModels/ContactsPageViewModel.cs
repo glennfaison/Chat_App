@@ -1,4 +1,5 @@
 ﻿using ChatApp.Common;
+using ChatApp.Facades;
 using ChatApp.Models.Csharp;
 using System;
 using System.Collections.Generic;
@@ -26,41 +27,10 @@ namespace ChatApp.ViewModels
         
         public ContactsPageViewModel()
         {
-            _allFriends = Facades.ContactFacade.GetAllContacts(out error);
-            _recentConversations = Facades.ContactFacade.GetRecentConversations(out error);
-            _friends = GetFriendProfiles();
-        }
-        /// <summary>
-        /// Get Friends' Profiles, depending on their online status
-        /// </summary>
-        /// <returns></returns>
-        private ObservableCollection<Profile> GetFriendProfiles(bool onlineOnly = false)
-        {
-            var ret = new ObservableCollection<Profile>();
-            foreach(var user in _allFriends)
-            {
-                ret.Add(new Profile
-                {
-                    LastActive = DateTime.Now,
-                    User = user
-                });
-            }
-            return ret;
-        }
-        
-        /// <summary>
-        /// Get profile of user from recent conversation.
-        /// </summary>
-        /// <param name="recentConversation"></param>
-        /// <returns></returns>
-        public Profile GetProfile(RecentConversation recentConversation)
-        {
-            //dummy
-            return new Profile
-            {
-                User = recentConversation.User,
-                LastActive = DateTime.Now,
-            };
+            _allFriends = ContactFacade.GetAllFriends(out error);
+            _recentConversations = ContactFacade.GetRecentConversations(out error);
+            _friends = ContactFacade.GetFriendProfiles(ref _allFriends);
+            ContactFacade.RecentConversations = _recentConversations;
         }
     }
 }

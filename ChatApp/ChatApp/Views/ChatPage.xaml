@@ -61,16 +61,17 @@
                 </Grid.RowDefinitions>
 
                 <TextBox x:Name="textBox"
-                             HorizontalAlignment="Stretch"
-                             VerticalAlignment="Center"
-                             BorderThickness="0"
-                             PlaceholderText="Type a message..."
-                             TextChanged="textBox_TextChanged"
-                             AcceptsReturn="True"/>
+                         Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Center"
+                         BorderThickness="0"
+                         PlaceholderText="Type a message..."
+                         TextChanged="textBox_TextChanged"
+                         AcceptsReturn="True"/>
                 <StackPanel x:Name="appBarButtons"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Stretch"
-                                Grid.Row="1">
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Stretch"
+                            Grid.Row="1">
                     <AppBarButton Icon="Character"/>
                     <AppBarButton Icon="Pictures"/>
                     <AppBarButton Icon="Emoji2"/>
@@ -85,7 +86,7 @@
                                       Visibility="Collapsed" 
                                       Foreground="LightBlue"
                                       Content="send"
-                                      Command="{Binding SendCurrentMessage}"/>
+                                      Command="{Binding SendMessage}"/>
                 </StackPanel>
             </Grid>
         </Grid>

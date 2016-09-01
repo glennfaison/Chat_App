@@ -1,4 +1,5 @@
-﻿using ChatApp.Models.Csharp;
+﻿using ChatApp.Facades;
+using ChatApp.Models.Csharp;
 using ChatApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -25,26 +26,30 @@ namespace ChatApp.Views
     public sealed partial class ContactsPage : Page
     {
         private ContactsPageViewModel _vm;
+        public ListView RecentConversationsListView { get { return recentConversationsListView; } }
         public ContactsPage()
         {
             this.InitializeComponent();
 
             _vm = new ContactsPageViewModel();
             DataContext = _vm;
+            ContactFacade.ContactPage = this;
         }
         /// <summary>
         /// Invoked when the selection on the recentConversationsListView is changed.
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        
+        /// <param name="e"></param>        
         private void recentConversationsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //profile to use for 'currentCorrespondentButton' in chatpage.
-            Profile _profile = _vm.GetProfile(recentConversationsListView.SelectedItem as RecentConversation);
-            Facades.AppShellNavigation.ChatFrame.Navigate(typeof(ChatPage), _profile);
+            Profile _profile = ContactFacade.GetProfile(recentConversationsListView.SelectedItem as RecentConversation);
+            if(_profile != null)
+            {
+                MessageFacade.Correspondent = _profile;
+                AppShellNavigation.ChatFrame.Navigate(typeof(ChatPage), _profile);
+            }
         }
-
         /// <summary>
         /// Invoked when the selection on the friendsListView is changed.
         /// </summary>
@@ -54,7 +59,11 @@ namespace ChatApp.Views
         {
             //profile to use for 'currentCorrespondentButton' in chatpage.
             Profile _profile = friendsListView.SelectedItem as Profile;
-            Facades.AppShellNavigation.ChatFrame.Navigate(typeof(ChatPage), _profile);
+            if (_profile != null)
+            {
+                MessageFacade.Correspondent = _profile;
+                AppShellNavigation.ChatFrame.Navigate(typeof(ChatPage), _profile);
+            }
         }
 
         #region Tab navigations.
@@ -62,12 +71,10 @@ namespace ChatApp.Views
         {
             recentConversationsTab.IsSelected = true;
         }
-
         private void friendsButton_Click(object sender, RoutedEventArgs e)
         {
             friendsTab.IsSelected = true;
         }
-
         private void settingsButton_Click(object sender, RoutedEventArgs e)
         {
             settingsTab.IsSelected = true;

@@ -1,4 +1,6 @@
-﻿using ChatApp.Models.Csharp;
+﻿using ChatApp.Common;
+using ChatApp.Models.Csharp;
+using ChatApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,12 +18,14 @@ namespace ChatApp.Facades
 {
     public static class ContactFacade
     {
-       
+        public static ContactsPage ContactPage { get; set; }
+        public static ObservableCollection<RecentConversation> RecentConversations { get; set; }
+
         /// <summary>
         /// Returns all friends of the current user.
         /// </summary>
         /// <returns></returns>
-        public static ObservableCollection<User> GetAllContacts(out string error)
+        public static ObservableCollection<User> GetAllFriends(out string error)
         {
             error = null;
             ObservableCollection<User> ret = new ObservableCollection<User>();
@@ -47,7 +51,7 @@ namespace ChatApp.Facades
             ObservableCollection<RecentConversation> ret = new ObservableCollection<RecentConversation>();
             // Query the database for all Contacts
             #region dummyRegion
-            var allContacts = GetAllContacts(out error);
+            var allContacts = GetAllFriends(out error);
             for (int i = 0; i < 10; i++)
             {
                 ret.Add(new RecentConversation
@@ -66,18 +70,79 @@ namespace ChatApp.Facades
             #endregion
             return ret;
         }
-        public static void AddToRecentlyContacted(Message message)
+        /// <summary>
+        /// Get Friends' Profiles, depending on their online status
+        /// </summary>
+        /// <returns></returns>
+        public static ObservableCollection<Profile> GetFriendProfiles(ref ObservableCollection<User> allFriends, 
+            bool onlineOnly = false)
+        {
+            if(allFriends == null)
+            {
+                return null;
+            }
+            var ret = new ObservableCollection<Profile>();
+            foreach (var user in allFriends)
+            {
+                ret.Add(new Profile
+                {
+                    LastActive = DateTime.Now,
+                    User = user
+                });
+            }
+            return ret;
+        }
+        /// <summary>
+        /// Get profile of user from recent conversation.
+        /// </summary>
+        /// <param name="recentConversation"></param>
+        /// <returns>Profile</returns>
+        public static Profile GetProfile(RecentConversation recentConversation)
+        {
+            if (recentConversation == null)
+            {
+                return null;
+            }
+            return new Profile
+            {
+                User = recentConversation.User,
+                LastActive = DateTime.Now,
+            };
+        }
+        public static void InsertRecentConversation(Message message, 
+            ref ObservableCollection<RecentConversation> recentConversations)
         {
             string error;
-            RemoveFromRecentlyContacted(GetCorrespondent(message, out error), out error);
+            User correspondent = GetCorrespondent(message, out error);
+            if(error != string.Empty)
+            {
+                ErrorDialog.ShowError(error);
+                return;
+            }
+            DeleteRecentConversation(correspondent, ref recentConversations, out error);
+            var conversation = new RecentConversation
+            {
+                LastMessage = message,
+                User = correspondent
+            };
+            recentConversations.Insert(0, conversation);
         }
         public static bool MessageWasExchangedWith(Message message, User user)
         {
             return message.Sender.Equals(user) || message.Receiver.Equals(user);
         }
-        public static void RemoveFromRecentlyContacted(User user, out string error)
+        public static void DeleteRecentConversation(User user, 
+            ref ObservableCollection<RecentConversation> recentConversations, out string error)
         {
             error = string.Empty;
+            foreach(var convo in recentConversations)
+            {
+                if (user.Id == convo.User.Id)
+                {
+                    recentConversations.Remove(convo);
+                    break;
+                }
+            }
         }
         public static User GetCorrespondent(Message message, out string error)
         {
@@ -97,17 +162,23 @@ namespace ChatApp.Facades
                 return message.Sender;
             }
         }
-        public static void InsertContact(User user, out string error)
+        public static void InsertFriend(User user, ref ObservableCollection<User> allFriends, out string error)
+        {
+            error = string.Empty;
+            if (!allFriends.Contains(user))
+            {
+                allFriends.Add(user);
+            }
+            // Insert into database here
+        }
+        public static void EditFriend(User user, out string error)
         {
             error = string.Empty;
         }
-        public static void EditContact(User user, out string error)
+        public static void DeleteFriend(User user, ref ObservableCollection<User> allFriends, out string error)
         {
             error = string.Empty;
-        }
-        public static void DeleteContact(User user, out string error)
-        {
-            error = string.Empty;
+            allFriends.Remove(user);
         }
     }
 }
