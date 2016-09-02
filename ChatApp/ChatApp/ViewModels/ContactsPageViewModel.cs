@@ -17,8 +17,8 @@ namespace ChatApp.ViewModels
     public class ContactsPageViewModel : BindableBase
     {
         private string error;
-        private ObservableCollection<User> _allFriends;
-        private ObservableCollection<RecentConversation> _recentConversations;
+        public static ObservableCollection<User> _allFriends;
+        public static ObservableCollection<RecentConversation> _recentConversations;
         private ObservableCollection<Profile> _friends;
 
         public ObservableCollection<User> AllFriends { get { return _allFriends; } }
@@ -29,8 +29,7 @@ namespace ChatApp.ViewModels
         {
             _allFriends = ContactFacade.GetAllFriends(out error);
             _recentConversations = ContactFacade.GetRecentConversations(out error);
-            _friends = ContactFacade.GetFriendProfiles(ref _allFriends);
-            ContactFacade.RecentConversations = _recentConversations;
+            _friends = ContactFacade.GetFriendProfiles();
         }
     }
 }

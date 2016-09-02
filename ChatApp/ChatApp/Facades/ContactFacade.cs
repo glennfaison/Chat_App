@@ -1,5 +1,6 @@
 ﻿using ChatApp.Common;
 using ChatApp.Models.Csharp;
+using ChatApp.ViewModels;
 using ChatApp.Views;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,14 @@ namespace ChatApp.Facades
     public static class ContactFacade
     {
         public static ContactsPage ContactPage { get; set; }
-        public static ObservableCollection<RecentConversation> RecentConversations { get; set; }
+        public static ObservableCollection<RecentConversation> current_RecentConversations
+        {
+            get { return ContactsPageViewModel._recentConversations; }
+        }
+        public static ObservableCollection<User> current_AllFriends
+        {
+            get { return ContactsPageViewModel._allFriends; }
+        }
 
         /// <summary>
         /// Returns all friends of the current user.
@@ -74,15 +82,14 @@ namespace ChatApp.Facades
         /// Get Friends' Profiles, depending on their online status
         /// </summary>
         /// <returns></returns>
-        public static ObservableCollection<Profile> GetFriendProfiles(ref ObservableCollection<User> allFriends, 
-            bool onlineOnly = false)
+        public static ObservableCollection<Profile> GetFriendProfiles(bool onlineOnly = false)
         {
-            if(allFriends == null)
+            if(current_AllFriends == null)
             {
                 return null;
             }
             var ret = new ObservableCollection<Profile>();
-            foreach (var user in allFriends)
+            foreach (var user in current_AllFriends)
             {
                 ret.Add(new Profile
                 {
@@ -109,8 +116,7 @@ namespace ChatApp.Facades
                 LastActive = DateTime.Now,
             };
         }
-        public static void InsertRecentConversation(Message message, 
-            ref ObservableCollection<RecentConversation> recentConversations)
+        public static void InsertRecentConversation(Message message)
         {
             string error;
             User correspondent = GetCorrespondent(message, out error);
@@ -119,27 +125,26 @@ namespace ChatApp.Facades
                 ErrorDialog.ShowError(error);
                 return;
             }
-            DeleteRecentConversation(correspondent, ref recentConversations, out error);
+            DeleteRecentConversation(correspondent, out error);
             var conversation = new RecentConversation
             {
                 LastMessage = message,
                 User = correspondent
             };
-            recentConversations.Insert(0, conversation);
+            current_RecentConversations.Insert(0, conversation);
         }
         public static bool MessageWasExchangedWith(Message message, User user)
         {
             return message.Sender.Equals(user) || message.Receiver.Equals(user);
         }
-        public static void DeleteRecentConversation(User user, 
-            ref ObservableCollection<RecentConversation> recentConversations, out string error)
+        public static void DeleteRecentConversation(User user, out string error)
         {
             error = string.Empty;
-            foreach(var convo in recentConversations)
+            foreach(var convo in current_RecentConversations)
             {
                 if (user.Id == convo.User.Id)
                 {
-                    recentConversations.Remove(convo);
+                    current_RecentConversations.Remove(convo);
                     break;
                 }
             }
@@ -162,12 +167,12 @@ namespace ChatApp.Facades
                 return message.Sender;
             }
         }
-        public static void InsertFriend(User user, ref ObservableCollection<User> allFriends, out string error)
+        public static void InsertFriend(User user, out string error)
         {
             error = string.Empty;
-            if (!allFriends.Contains(user))
+            if (!current_AllFriends.Contains(user))
             {
-                allFriends.Add(user);
+                current_AllFriends.Add(user);
             }
             // Insert into database here
         }
@@ -175,10 +180,10 @@ namespace ChatApp.Facades
         {
             error = string.Empty;
         }
-        public static void DeleteFriend(User user, ref ObservableCollection<User> allFriends, out string error)
+        public static void DeleteFriend(User user, out string error)
         {
             error = string.Empty;
-            allFriends.Remove(user);
+            current_AllFriends.Remove(user);
         }
     }
 }

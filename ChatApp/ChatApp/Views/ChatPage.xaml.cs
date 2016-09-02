@@ -32,7 +32,6 @@ namespace ChatApp.Views
             _vm = new ChatPageViewModel();
             DataContext = _vm;
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _vm.ChatCorrespondent = e.Parameter as Profile;
@@ -42,8 +41,7 @@ namespace ChatApp.Views
         //What are these for?
         static public int MinViewWidth { get; set; } = 620;
         static public int PaneWidth { get; set; } = 330;
-
-
+        
         /// <summary>
         /// Occures when the full screen button is clicked.
         /// </summary>
@@ -55,7 +53,6 @@ namespace ChatApp.Views
         {
             AppShell.GoFullScreen();
         }
-
         /// <summary>
         /// Sets the current message text
         /// </summary>
@@ -63,7 +60,7 @@ namespace ChatApp.Views
         /// <param name="e"></param>
         private void textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            _vm.SetText(textBox.Text);
+            _vm.Text = textBox.Text;
             if (!string.IsNullOrEmpty(textBox.Text) && !string.IsNullOrWhiteSpace(textBox.Text))
             {
                 likeButton.Visibility = Visibility.Collapsed;

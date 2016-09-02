@@ -10,107 +10,43 @@ namespace ChatApp.Facades
 {
     public static class MessageFacade
     {
-        public static Profile Correspondent { get; set; }
         static int i = 500;
+
+        public static Profile Correspondent { get; set; }
+
         /// <summary>
         /// Returns the messages between the 2 users
         /// </summary>
-        /// <param name="u1"></param>
+        /// <param name="Correspondent"></param>
         /// <param name="u2"></param>
         /// <returns></returns>
-        public static ObservableCollection<Message> GetMessages(User u1, User u2)
+        public static ObservableCollection<Message> GetMessages()
         {
             var messages = new ObservableCollection<Message>();
-            //dummy.
+            // Get message thread with Correspondent
             #region dummyRegion
-            messages.Add(new Message
+            for(int i = 0; i < 10; i++)
             {
-                Sender = App.ThisUser,
-                Receiver = App.AnotherUser,
-                Content = "How are you doing nigga?",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.AnotherUser,
-                Receiver = App.ThisUser,
-                Content = "I dey bitch...",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.ThisUser,
-                Receiver = App.AnotherUser,
-                Content = "How are you doing nigga?",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.AnotherUser,
-                Receiver = App.ThisUser,
-                Content = "I dey bitch...",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.ThisUser,
-                Receiver = App.AnotherUser,
-                Content = "How are you doing nigga?",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.AnotherUser,
-                Receiver = App.ThisUser,
-                Content = "I dey bitch...",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.ThisUser,
-                Receiver = App.AnotherUser,
-                Content = "How are you doing nigga?",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.AnotherUser,
-                Receiver = App.ThisUser,
-                Content = "I dey bitch...",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.ThisUser,
-                Receiver = App.AnotherUser,
-                Content = "How are you doing nigga?",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.AnotherUser,
-                Receiver = App.ThisUser,
-                Content = "I dey bitch...",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.ThisUser,
-                Receiver = App.AnotherUser,
-                Content = "How are you doing nigga?",
-                DateTime = DateTime.Now,
-            });
-            messages.Add(new Message
-            {
-                Sender = App.AnotherUser,
-                Receiver = App.ThisUser,
-                Content = "I dey bitch...",
-                DateTime = DateTime.Now,
-            });
+                messages.Add(new Message
+                {
+                    Sender = App.ThisUser,
+                    Receiver = App.AnotherUser,
+                    Content = "How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? How are you doing?",
+                    DateTime = DateTime.Now,
+                });
+                messages.Add(new Message
+                {
+                    Sender = App.AnotherUser,
+                    Receiver = App.ThisUser,
+                    Content = "I dey ok. I am deying",
+                    DateTime = DateTime.Now,
+                });
+            }
             #endregion
             return messages;
         }
-        public static void SendMessage(string text, Profile chatCorrespondent, out string error)
+        public static void SendMessage(string text,
+            ref ObservableCollection<Message> messageThread, out string error)
         {
             error = string.Empty;
             var message = new Message
@@ -118,11 +54,28 @@ namespace ChatApp.Facades
                 Content = text,
                 DateTime = DateTime.Now,
                 Id = i++,
-                Receiver = chatCorrespondent.User,
+                Receiver = Correspondent.User,
                 Sender = App.ThisUser
             };
-            var conversations = ContactFacade.RecentConversations;
-            ContactFacade.InsertRecentConversation(message, ref conversations);
+            var allFriends = ContactFacade.current_RecentConversations;
+            InsertMessage(message, ref messageThread, out error);
+        }
+        public static void InsertMessage(Message message,
+            ref ObservableCollection<Message> messageThread, out string error)
+        {
+            error = string.Empty;
+            messageThread.Add(message);
+            ContactFacade.InsertRecentConversation(message);
+            // Insert message into the database here
+        }
+        public static void DeleteMessage(Message message,
+            ref ObservableCollection<Message> messageThread, out string error)
+        {
+            error = string.Empty;
+            messageThread.Remove(message);
+            var correspondent = ContactFacade.GetCorrespondent(message, out error);
+            ContactFacade.DeleteRecentConversation(correspondent, out error);
+            // Delete message from the database here
         }
     }
 }

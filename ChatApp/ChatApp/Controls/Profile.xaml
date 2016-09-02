@@ -19,7 +19,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
@@ -35,7 +35,8 @@
                    FontSize="16"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   TextAlignment="Center"/>
+                   TextAlignment="Center"
+                   Margin="5,0,5,0"/>
         <TextBlock Text="{Binding LastActive, Converter={StaticResource LastActiveDateTimeToStringConverter}}"
                    Grid.Column="2"
                    HorizontalAlignment="Right"

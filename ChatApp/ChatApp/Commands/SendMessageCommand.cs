@@ -23,7 +23,8 @@ namespace ChatApp.Commands
         public void Execute(object parameter)
         {
             string error;
-            MessageFacade.SendMessage(ParentModel.Text, ParentModel.ChatCorrespondent, out error);
+            var messageThread = ParentModel.MessageThread;
+            MessageFacade.SendMessage(ParentModel.Text, ref messageThread, out error);
             ContactFacade.ContactPage.RecentConversationsListView.SelectedIndex = 0;
             ParentModel.Text = string.Empty;
         }

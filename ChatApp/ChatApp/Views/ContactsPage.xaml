@@ -70,7 +70,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </FlipViewItem>
-                <FlipViewItem Tag="Contacts"
+                <FlipViewItem Tag="Friends"
                               Background="White"
                               x:Name="friendsTab">
                     <ListView ItemsSource="{Binding Friends, Mode=TwoWay}"

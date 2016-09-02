@@ -33,9 +33,11 @@
             </Grid.RowDefinitions>
 
             <ScrollViewer Grid.Row="0"
+                          x:Name="scrollViewer"
                           BorderBrush="Gray"
-                          BorderThickness="1">
-                    <ItemsControl ItemsSource="{Binding Messages}">
+                          BorderThickness="1" 
+                          HorizontalScrollMode="Disabled">
+                <ItemsControl ItemsSource="{Binding MessageThread}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel/>
@@ -43,7 +45,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="models:Message">
-                            <Controls:Message Margin="5"/>
+                            <Controls:Message Margin="10"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -61,17 +63,16 @@
                 </Grid.RowDefinitions>
 
                 <TextBox x:Name="textBox"
-                         Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         HorizontalAlignment="Stretch"
-                         VerticalAlignment="Center"
-                         BorderThickness="0"
-                         PlaceholderText="Type a message..."
-                         TextChanged="textBox_TextChanged"
-                         AcceptsReturn="True"/>
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Center"
+                             BorderThickness="0"
+                             PlaceholderText="Type a message..."
+                             TextChanged="textBox_TextChanged"
+                             AcceptsReturn="True"/>
                 <StackPanel x:Name="appBarButtons"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Stretch"
-                            Grid.Row="1">
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Stretch"
+                                Grid.Row="1">
                     <AppBarButton Icon="Character"/>
                     <AppBarButton Icon="Pictures"/>
                     <AppBarButton Icon="Emoji2"/>
@@ -79,14 +80,14 @@
                     <AppBarButton Icon="Microphone"/>
                     <AppBarButton Icon="Camera"/>
                     <AppBarButton x:Name="likeButton"
-                                      Icon="Like" 
-                                      Foreground="LightBlue"/>
+                                  Icon="Like" 
+                                  Foreground="LightBlue"/>
                     <AppBarButton x:Name="sendButton"
-                                      Icon="Send" 
-                                      Visibility="Collapsed" 
-                                      Foreground="LightBlue"
-                                      Content="send"
-                                      Command="{Binding SendMessage}"/>
+                                  Icon="Send" 
+                                  Visibility="Collapsed" 
+                                  Foreground="LightBlue"
+                                  Content="send"
+                                  Command="{Binding SendMessage}"/>
                 </StackPanel>
             </Grid>
         </Grid>

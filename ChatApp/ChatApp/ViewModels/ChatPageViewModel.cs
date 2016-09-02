@@ -18,7 +18,7 @@ namespace ChatApp.ViewModels
     /// </summary>
     public class ChatPageViewModel : BindableBase
     {
-        private ObservableCollection<Message> _messages;
+        private ObservableCollection<Message> _messageThread;
         private string _text;
         private Profile _chatCorrespondent;
 
@@ -30,7 +30,7 @@ namespace ChatApp.ViewModels
             get { return _text; }
             set { SetProperty(ref _text, value); }
         }
-        public ObservableCollection<Message> Messages { get { return _messages; } }
+        public ObservableCollection<Message> MessageThread { get { return _messageThread; } }
         public ICommand SendMessage { get; set; }
         /// <summary>
         /// The chat correspondent.
@@ -43,9 +43,9 @@ namespace ChatApp.ViewModels
 
         public ChatPageViewModel()
         {
-            ChatCorrespondent = MessageFacade.Correspondent;
             SendMessage = new SendMessageCommand(this);
-            _messages = MessageFacade.GetMessages(App.ThisUser, ChatCorrespondent.User);
+            ChatCorrespondent = MessageFacade.Correspondent;
+            _messageThread = MessageFacade.GetMessages();
         }
 
         /// <summary>

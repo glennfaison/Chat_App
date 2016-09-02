@@ -38,8 +38,9 @@
                 <TextBlock Text="{Binding Content}"
                            Margin="10"
                            VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           TextWrapping="Wrap"
+                           HorizontalAlignment="Left"
+                           TextWrapping="WrapWholeWords" 
+                           LineStackingStrategy="BaselineToBaseline" 
                            Foreground="White"/>
             </Border>
             <TextBlock Text="{Binding DateTime, Converter={StaticResource MessageDateTimeToStringConverter}}"
@@ -68,8 +69,8 @@
                 <TextBlock Text="{Binding Content}"
                            Margin="10"
                            VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           TextWrapping="Wrap"
+                           HorizontalAlignment="Right"
+                           TextWrapping="WrapWholeWords"
                            Foreground="White"/>
             </Border>
             <controls:ProfilePicture DataContext="{Binding Sender}"
