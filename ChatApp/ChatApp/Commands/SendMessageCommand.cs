@@ -27,6 +27,7 @@ namespace ChatApp.Commands
             MessageFacade.SendMessage(ParentModel.Text, ref messageThread, out error);
             ContactFacade.ContactPage.RecentConversationsListView.SelectedIndex = 0;
             ParentModel.Text = string.Empty;
+            MessageFacade.ChatPage.ClearTextBox();
         }
     }
 }

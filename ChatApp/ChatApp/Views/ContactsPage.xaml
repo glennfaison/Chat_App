@@ -57,7 +57,8 @@
                               IncrementalLoadingTrigger="Edge"
                               IncrementalLoadingThreshold="30"
                               SelectionMode="Single"
-                              SelectionChanged="recentConversationsListView_SelectionChanged">
+                              IsItemClickEnabled="True"
+                              ItemClick="recentConversationsListView_ItemClick">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -80,7 +81,8 @@
                               IncrementalLoadingTrigger="Edge"
                               IncrementalLoadingThreshold="30"
                               SelectionMode="Single"
-                              SelectionChanged="friendsListView_SelectionChanged">
+                              IsItemClickEnabled="True"
+                              ItemClick="friendsListView_ItemClick">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/> 

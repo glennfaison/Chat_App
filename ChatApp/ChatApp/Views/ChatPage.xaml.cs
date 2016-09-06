@@ -1,4 +1,5 @@
-﻿using ChatApp.Models.Csharp;
+﻿using ChatApp.Facades;
+using ChatApp.Models.Csharp;
 using ChatApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -28,20 +29,19 @@ namespace ChatApp.Views
 
         public ChatPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             _vm = new ChatPageViewModel();
             DataContext = _vm;
+            MessageFacade.ChatPage = this;
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _vm.ChatCorrespondent = e.Parameter as Profile;
         }
-
-
-        //What are these for?
-        static public int MinViewWidth { get; set; } = 620;
-        static public int PaneWidth { get; set; } = 330;
-        
+        public void ClearTextBox()
+        {
+            textBox.Text = string.Empty;
+        }        
         /// <summary>
         /// Occures when the full screen button is clicked.
         /// </summary>
@@ -51,7 +51,14 @@ namespace ChatApp.Views
         /// It would make more sense for this to be a toggle button.
         void fullScreenButton_Click(object sender, RoutedEventArgs e)
         {
-            AppShell.GoFullScreen();
+            if (!AppShellNavigation.AppShell.IsFullScreen)
+            {
+                AppShellNavigation.AppShell.ShowChatPageOnly();
+            }
+            else
+            {
+                AppShellNavigation.AppShell.ShowContactPage();
+            }
         }
         /// <summary>
         /// Sets the current message text
@@ -70,6 +77,19 @@ namespace ChatApp.Views
             {
                 likeButton.Visibility = Visibility.Visible;
                 sendButton.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if(e.NewSize.Width < 620)
+            {
+                Grid.SetRow(appBarButtons, 1);
+                Grid.SetColumn(appBarButtons, 0);
+            }
+            else
+            {
+                Grid.SetRow(appBarButtons, 0);
+                Grid.SetColumn(appBarButtons, 1);
             }
         }
     }

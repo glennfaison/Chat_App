@@ -36,33 +36,47 @@ namespace ChatApp.Views
             ContactFacade.ContactPage = this;
         }
         /// <summary>
-        /// Invoked when the selection on the recentConversationsListView is changed.
+        /// Invoked when an item on the recentConversationsListView is clicked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>        
-        private void recentConversationsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void recentConversationsListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             //profile to use for 'currentCorrespondentButton' in chatpage.
-            Profile _profile = ContactFacade.GetProfile(recentConversationsListView.SelectedItem as RecentConversation);
-            if(_profile != null)
+            Profile _profile = ContactFacade.GetProfile(e.ClickedItem as RecentConversation);
+            if (AppShellNavigation.AppShell.IsInMobileMode)
             {
-                MessageFacade.Correspondent = _profile;
-                AppShellNavigation.ChatFrame.Navigate(typeof(ChatPage), _profile);
+                AppShellNavigation.AppShell.ShowChatPageOnly();
+            }
+            if (_profile != null)
+            {
+                if (MessageFacade.Correspondent == null || MessageFacade.Correspondent.User.Id != _profile.User.Id)
+                {
+                    MessageFacade.Correspondent = _profile;
+                    AppShellNavigation.ChatFrame.Navigate(typeof(ChatPage), _profile);
+                }
             }
         }
         /// <summary>
-        /// Invoked when the selection on the friendsListView is changed.
+        /// Invoked when an item on the friendsListView is clicked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void friendsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void friendsListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             //profile to use for 'currentCorrespondentButton' in chatpage.
-            Profile _profile = friendsListView.SelectedItem as Profile;
+            Profile _profile = e.ClickedItem as Profile;
+            if (AppShellNavigation.AppShell.IsInMobileMode)
+            {
+                AppShellNavigation.AppShell.ShowChatPageOnly();
+            }
             if (_profile != null)
             {
-                MessageFacade.Correspondent = _profile;
-                AppShellNavigation.ChatFrame.Navigate(typeof(ChatPage), _profile);
+                if (MessageFacade.Correspondent == null || MessageFacade.Correspondent.User.Id != _profile.User.Id)
+                {
+                    MessageFacade.Correspondent = _profile;
+                    AppShellNavigation.ChatFrame.Navigate(typeof(ChatPage), _profile);
+                }
             }
         }
 

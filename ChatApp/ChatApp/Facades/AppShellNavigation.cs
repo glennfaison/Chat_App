@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChatApp.Views;
 using Windows.UI.Xaml.Controls;
 
 namespace ChatApp.Facades
@@ -14,5 +15,6 @@ namespace ChatApp.Facades
     {
         public static Frame ContactsFrame { get; set; }
         public static Frame ChatFrame { get; set; }
+        public static AppShell AppShell { get; set; }
     }
 }

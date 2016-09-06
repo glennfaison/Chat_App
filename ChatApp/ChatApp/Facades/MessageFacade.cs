@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
+using ChatApp.Views;
 
 namespace ChatApp.Facades
 {
@@ -13,6 +15,7 @@ namespace ChatApp.Facades
         static int i = 500;
 
         public static Profile Correspondent { get; set; }
+        public static ChatPage ChatPage { get; internal set; }
 
         /// <summary>
         /// Returns the messages between the 2 users
@@ -57,7 +60,12 @@ namespace ChatApp.Facades
                 Receiver = Correspondent.User,
                 Sender = App.ThisUser
             };
-            var allFriends = ContactFacade.current_RecentConversations;
+            InsertMessage(message, ref messageThread, out error);
+        }
+        public static void RecieveMessage(Message message,
+            ref ObservableCollection<Message> messageThread)
+        {
+            string error;
             InsertMessage(message, ref messageThread, out error);
         }
         public static void InsertMessage(Message message,

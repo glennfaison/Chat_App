@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatApp.Facades;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,27 +23,67 @@ namespace ChatApp.Views
     /// </summary>
     public sealed partial class AppShell : Page
     {
-        private static bool isFullScreen { get; set; } = false;
+        private static bool isInMobileMode = false;
+        private GridLength contactColumnWidth = new GridLength(350);
+        private GridLength chatColumnWidth = new GridLength(1 ,GridUnitType.Star);
+
+        public bool IsFullScreen { get; set; }
+        public bool IsInMobileMode
+        {
+            get { return isInMobileMode; }
+            set
+            {
+                if(value != isInMobileMode)
+                {
+                    isInMobileMode = value;
+                    ShowContactPage();
+                }
+            }
+        }
 
         public AppShell()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.Loaded += (s, e) =>
+            Loaded += (s, e) =>
             {
-                Facades.AppShellNavigation.ChatFrame = this.chatFrame;
-                Facades.AppShellNavigation.ContactsFrame = this.contactsFrame;
-
-                Facades.AppShellNavigation.ContactsFrame.Navigate(typeof(ContactsPage));
+                AppShellNavigation.ChatFrame = chatFrame;
+                AppShellNavigation.ContactsFrame = contactsFrame;
+                AppShellNavigation.AppShell = this;
+                AppShellNavigation.ContactsFrame.Navigate(typeof(ContactsPage));
             };
         }
-        public static void GoFullScreen()
+        public void ShowChatPageOnly()
         {
-            //go full screen here by tweaking visibilty
+            contactColumn.Width = new GridLength(0);
+            chatColumn.Width = chatColumnWidth;
+            IsFullScreen = true;
         }
-        public static void LeaveFullScreen()
+        public void ShowContactPage()
         {
-            //leave full screen here by tweaking visibility
+            if (IsInMobileMode)
+            {
+                contactColumn.Width = chatColumnWidth;
+                chatColumn.Width = new GridLength(0);
+            }
+            else
+            {
+                contactColumn.Width = contactColumnWidth;
+                chatColumn.Width = chatColumnWidth;
+            }
+            IsFullScreen = false;
+        }
+        private void page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var newWidth = e.NewSize.Width;
+            if(newWidth < 550)
+            {
+                IsInMobileMode = true;
+            }
+            else if(newWidth >= 550)
+            {
+                IsInMobileMode = false;
+            }
         }
     }
 }

@@ -5,12 +5,15 @@
     xmlns:local="using:ChatApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    x:Name="page"
+    MinWidth="100"
+    SizeChanged="page_SizeChanged">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="350" x:Name="contactColumn"/>
+            <ColumnDefinition Width="*" x:Name="chatColumn"/>
         </Grid.ColumnDefinitions>
 
         <Frame x:Name="contactsFrame"
