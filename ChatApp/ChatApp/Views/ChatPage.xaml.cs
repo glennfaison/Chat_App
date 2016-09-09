@@ -92,5 +92,9 @@ namespace ChatApp.Views
                 Grid.SetColumn(appBarButtons, 1);
             }
         }
+        private void scrollViewer_LayoutUpdated(object sender, object e)
+        {
+            scrollViewer.ScrollToVerticalOffset(int.MaxValue);
+        }
     }
 }

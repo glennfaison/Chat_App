@@ -33,7 +33,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <ScrollViewer Grid.Row="0"
+            <ScrollViewer Grid.Row="0" LayoutUpdated="scrollViewer_LayoutUpdated"
                           x:Name="scrollViewer"
                           BorderBrush="Gray"
                           BorderThickness="1" 
