@@ -8,6 +8,8 @@
     mc:Ignorable="d"
     x:Name="page"
     MinWidth="100"
+    d:Width="400"
+    d:Height="300"
     SizeChanged="page_SizeChanged">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
