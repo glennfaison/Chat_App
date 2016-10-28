@@ -1,2 +1,8 @@
 # Chat_App
-Just a chat app
+
+A copy of Facebook Messenger for UWP  
+
+## Technology
+
+- UWP
+- Quickblox (for IM)
