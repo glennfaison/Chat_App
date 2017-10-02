@@ -1,14 +1,8 @@
-﻿
-using ChatApp.Commands;
+﻿using ChatApp.Commands;
 using ChatApp.Common;
 using ChatApp.Facades;
 using ChatApp.Models.Csharp;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ChatApp.ViewModels
@@ -28,14 +22,17 @@ namespace ChatApp.ViewModels
         public string Text
         {
             get { return _text; }
-            set { SetProperty(ref _text, value); }
+            set { base.Set(ref _text, value); }
         }
+
         public ObservableCollection<Message> MessageThread
         {
             get { return _messageThread; }
-            private set { SetProperty(ref _messageThread, value); }
+            private set { base.Set(ref _messageThread, value); }
         }
+
         public ICommand SendMessage { get; set; }
+
         /// <summary>
         /// The chat correspondent.
         /// </summary>
@@ -44,11 +41,9 @@ namespace ChatApp.ViewModels
             get { return _chatCorrespondent; }
             set
             {
-                if(_chatCorrespondent == null || value.User.Id != _chatCorrespondent.User.Id)
-                {
-                    SetProperty(ref _chatCorrespondent, value);
-                    MessageThread = MessageFacade.GetMessages();
-                }
+                if (_chatCorrespondent != null && value.User.Id == _chatCorrespondent.User.Id) return;
+                base.Set(ref _chatCorrespondent, value);
+                MessageThread = MessageFacade.GetMessages();
             }
         }
 
@@ -59,7 +54,7 @@ namespace ChatApp.ViewModels
         }
 
         /// <summary>
-        /// Sets the message to text from the textbox.
+        /// Sets the message to text from the text box.
         /// </summary>
         /// <param name="text"></param>
         internal void SetText(string text)
